@@ -1,5 +1,5 @@
 - name: install mangodb
-  hosts: web
+  hosts: mongodb
   become: yes
   tasks:
   - name: copy the repo
@@ -18,7 +18,7 @@
       state: started
       enabled: yes
 
-  - nmae: relace the IP
+  - name: relace the IP
     ansible.builtin.replace:
       path: /etc/mongod.conf
       regexp: '127.0.0.1'
