@@ -1,0 +1,30 @@
+- name: install mangodb
+  hosts: web
+  become: yes
+  tasks:
+  - name: copy the repo
+    ansible.builtin.copy:
+      src: mongo.repo
+      dest: /etc/yum.repos.d/mongo.repo
+
+  - name: install mango db 
+    ansible.builtin.dnf:
+      name: mongodb-org
+      state: present
+  
+  - name: start the mango service
+    ansible.builtin.service:
+      name: mangod
+      state: started
+      enabled: yes
+
+  - nmae: relace the IP
+    ansible.builtin.replace:
+      path: /etc/mongod.conf
+      regexp: '127.0.0.1'
+      replace: '0.0.0.0'
+
+  - name: start the mango service
+    ansible.builtin.service:
+      name: mangod
+      state: restarted
